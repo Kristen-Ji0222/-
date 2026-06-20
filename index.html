@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>诗诗老师粤语班成绩表</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+HK:wght@300;400;500;700;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cream: #FFF8F0;
+            --pink: #FADADD;
+            --pink-mid: #F7C5CC;
+            --pink-dark: #E8A0B0;
+            --gold: #D4A843;
+            --gold-light: #F5E6C8;
+            --gold-glow: rgba(212, 168, 67, 0.3);
+            --silver: #B8C5D6;
+            --silver-light: #DCE6F0;
+            --silver-glow: rgba(184, 197, 214, 0.35);
+            --bronze: #C8946E;
+            --bronze-light: #F0DCC8;
+            --bronze-glow: rgba(200, 148, 110, 0.3);
+            --text-primary: #4A3728;
+            --text-secondary: #8B7355;
+            --text-muted: #B8A898;
+            --card-bg: #FFFFFF;
+            --card-border: #F0E6DA;
+            --bg: #FFF8F0;
+            --section-bg: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Quicksand', 'Inter', 'Noto Sans HK', -apple-system, sans-serif;
+            background: var(--cream);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* ========== FLOATING LULU PIGS ========== */
+        .lulu-corner {
+            position: fixed;
+            z-index: 10;
+            pointer-events: none;
+            opacity: 0.35;
+            animation: floatPig 4s ease-in-out infinite;
+        }
+        .lulu-corner img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .lulu-corner.tl { top: 2rem; left: 2rem; animation-delay: 0s; }
+        .lulu-corner.tr { top: 2rem; right: 2rem; animation-delay: 1.5s; }
+        .lulu-corner.bl { bottom: 2rem; left: 2rem; animation-delay: 3s; }
+        .lulu-corner.br { bottom: 2rem; right: 2rem; animation-delay: 1s; }
+
+        @keyframes floatPig {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-12px) rotate(3deg); }
+            50% { transform: translateY(-6px) rotate(0deg); }
+            75% { transform: translateY(-18px) rotate(-3deg); }
+        }
+
+        /* ========== BACKGROUND DECORATION ========== */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.15;
+            background-image:
+                radial-gradient(circle at 10% 20%, var(--pink) 1px, transparent 1px),
+                radial-gradient(circle at 90% 80%, var(--gold-light) 1px, transparent 1px),
+                radial-gradient(circle at 50% 50%, var(--pink) 1px, transparent 1px),
+                radial-gradient(circle at 20% 70%, var(--gold-light) 2px, transparent 2px),
+                radial-gradient(circle at 80% 30%, var(--pink) 2px, transparent 2px);
+            background-size: 200px 200px, 180px 180px, 220px 220px, 250px 250px, 190px 190px;
+            background-position: 0 0, 50px 30px, 100px 60px, 150px 90px, 80px 120px;
+        }
+
+        /* ========== HEADER ========== */
+        .header {
+            position: relative;
+            z-index: 2;
+            padding: 2rem 3rem 1.5rem;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,248,240,0.5) 100%);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--gold-light);
+        }
+
+        .header-lulu {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            animation: floatPig 3s ease-in-out infinite;
+        }
+        .header-lulu img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .header-lulu .sparkle {
+            font-size: 2.5rem;
+        }
+
+        .header-title {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--pink-dark);
+            margin-top: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .header-title .gold {
+            color: var(--gold);
+        }
+
+        .header-subtitle {
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-top: 0.3rem;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .header-line {
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--pink), var(--gold-light), var(--pink));
+            margin: 1rem auto 0;
+            border-radius: 2px;
+        }
+
+        /* ========== STATS BAR ========== */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--card-border);
+            position: relative;
+            z-index: 2;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 1.8rem 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card .lulu-icon {
+            margin-bottom: 0.4rem;
+        }
+        .stat-card .lulu-icon img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .stat-label {
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--pink-dark);
+            line-height: 1.2;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .stat-number.gold-num { color: var(--gold); }
+        .stat-number.silver-num { color: #7B8FA1; }
+        .stat-number.bronze-num { color: var(--bronze); }
+
+        /* ========== MAIN CONTENT ========== */
+        .main-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem 3rem;
+        }
+
+        /* ========== SECTION ========== */
+        .section {
+            margin-bottom: 2.5rem;
+            background: var(--section-bg);
+            border-radius: 16px;
+            border: 1.5px solid var(--card-border);
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(200, 180, 160, 0.08);
+            position: relative;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 12px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: url('lulu-pig-3.jpg') center/cover no-repeat;
+            border-radius: 50%;
+            opacity: 0.25;
+            pointer-events: none;
+        }
+
+        .section.elite-section::before { background-image: url('lulu-pig-3.jpg'); }
+        .section.normal-section::before { background-image: url('lulu-pig-4.jpg'); }
+
+        .section-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #FFFAF5 0%, #FFF5EE 100%);
+        }
+
+        .section-title-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .section-badge {
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            color: var(--pink-dark);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .section-subtitle {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        .section-count {
+            background: var(--gold-light);
+            color: var(--gold);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* ========== DISCIPLINE SUB-SECTION ========== */
+        .discipline-group {
+            padding: 0 0;
+        }
+
+        .discipline-header {
+            padding: 1rem 2rem;
+            background: #FFFAF5;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .discipline-icon {
+            font-size: 1.5rem;
+        }
+
+        .discipline-name {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .discipline-name .cn {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-left: 0.5rem;
+        }
+
+        .discipline-count {
+            margin-left: auto;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        /* ========== TABLE ========== */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table thead th {
+            text-align: left;
+            padding: 0.8rem 1.5rem;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 600;
+            background: #FFFBF7;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .data-table tbody tr {
+            border-bottom: 1px solid #F5EDE3;
+            transition: background 0.3s;
+        }
+
+        .data-table tbody tr:hover {
+            background: #FFFBF7;
+        }
+
+        .data-table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .data-table tbody td {
+            padding: 0.8rem 1.5rem;
+            font-size: 0.82rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .data-table .col-rank {
+            width: 40px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+        }
+
+        .data-table .col-school {
+            color: var(--text-secondary);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .data-table .col-major {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .data-table .col-name {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+        }
+
+        .data-table .col-score {
+            text-align: center;
+            font-weight: 800;
+            font-size: 1rem;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .data-table .col-badge {
+            text-align: center;
+            width: 60px;
+        }
+
+        /* ========== BADGES ========== */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            position: relative;
+        }
+
+        .badge-gold {
+            background: linear-gradient(135deg, #F5E6C8, #D4A843);
+            box-shadow: 0 0 12px var(--gold-glow), 0 2px 8px rgba(180, 140, 60, 0.2);
+            border: 2px solid #C89B3C;
+        }
+
+        .badge-silver {
+            background: linear-gradient(135deg, #DCE6F0, #B8C5D6);
+            box-shadow: 0 0 12px var(--silver-glow), 0 2px 8px rgba(140, 160, 190, 0.2);
+            border: 2px solid #9BB0C4;
+        }
+
+        .badge-bronze {
+            background: linear-gradient(135deg, #F0DCC8, #C8946E);
+            box-shadow: 0 0 12px var(--bronze-glow), 0 2px 8px rgba(180, 130, 90, 0.2);
+            border: 2px solid #B08060;
+        }
+
+        .score-gold { color: #C89B3C; }
+        .score-silver { color: #7B8FA1; }
+        .score-bronze { color: #B08060; }
+
+        /* ========== LEGEND ========== */
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 1.5rem 2rem;
+            background: #FFFAF5;
+            border-top: 1px solid var(--card-border);
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .legend-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            position: relative;
+            z-index: 2;
+            padding: 2rem 3rem;
+            text-align: center;
+            background: linear-gradient(0deg, rgba(255,255,255,0.95) 0%, rgba(255,248,240,0.5) 100%);
+            border-top: 2px solid var(--gold-light);
+        }
+
+        .footer-lulu {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+        .footer-lulu img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .footer-lulu .heart {
+            font-size: 1.5rem;
+        }
+
+        .footer-text {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .footer-note {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+            opacity: 0.7;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .stats-bar { grid-template-columns: repeat(2, 1fr); }
+            .header { padding: 1.5rem 1rem; }
+            .header-title { font-size: 1.4rem; }
+            .main-content { padding: 0.5rem 0.8rem 2rem; }
+            .section-header { padding: 1rem 1.2rem; flex-direction: column; gap: 0.5rem; }
+            .discipline-header { padding: 0.8rem 1.2rem; }
+            .data-table thead { display: none; }
+            .data-table tbody tr { display: block; margin-bottom: 0.5rem; border: 1px solid var(--card-border); border-radius: 8px; padding: 0.5rem; }
+            .data-table tbody td { display: block; padding: 0.3rem 0.8rem; text-align: left !important; }
+            .data-table tbody td::before { content: attr(data-label); font-size: 0.6rem; color: var(--text-muted); display: block; letter-spacing: 1px; text-transform: uppercase; }
+            .section::before { width: 35px; height: 35px; top: 8px; right: 12px; }
+            .lulu-corner img { width: 50px; height: 50px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- FLOATING LULU PIGS -->
+    <div class="lulu-corner tl"><img src="lulu-pig-1.jpg" alt="Lulu Pig"></div>
+    <div class="lulu-corner tr"><img src="lulu-pig-2.jpg" alt="Lulu Pig"></div>
+    <div class="lulu-corner bl"><img src="lulu-pig-3.jpg" alt="Lulu Pig"></div>
+    <div class="lulu-corner br"><img src="lulu-pig-4.jpg" alt="Lulu Pig"></div>
+
+    <!-- BG PATTERN -->
+    <div class="bg-pattern"></div>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-lulu">
+            <img src="lulu-pig-1.jpg" alt="Lulu Pig">
+            <span class="sparkle">✨</span>
+            <img src="lulu-pig-2.jpg" alt="Lulu Pig">
+        </div>
+        <h1 class="header-title">
+            <span class="gold">sisi cantonese</span> ELITE SCORE REPORT
+        </h1>
+        <p class="header-subtitle">Selected Academic Performance Record</p>
+        <div class="header-line"></div>
+    </header>
+
+    <!-- STATS BAR -->
+    <div class="stats-bar">
+        <div class="stat-card">
+            <div class="lulu-icon"><img src="lulu-pig-1.jpg" alt="Lulu Pig"></div>
+            <div class="stat-label">Total Students</div>
+            <div class="stat-number" id="totalCount">—</div>
+        </div>
+        <div class="stat-card">
+            <div class="lulu-icon">🥇</div>
+            <div class="stat-label">25 Points · Gold</div>
+            <div class="stat-number gold-num" id="goldCount">—</div>
+        </div>
+        <div class="stat-card">
+            <div class="lulu-icon">🥈</div>
+            <div class="stat-label">24 Points · Silver</div>
+            <div class="stat-number silver-num" id="silverCount">—</div>
+        </div>
+        <div class="stat-card">
+            <div class="lulu-icon">🥉</div>
+            <div class="stat-label">23 Points · Bronze</div>
+            <div class="stat-number bronze-num" id="bronzeCount">—</div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content" id="mainContent">
+    </main>
+
+    <!-- LEGEND -->
+    <div style="max-width:1200px;margin:0 auto 2rem;position:relative;z-index:2;padding:0 2rem;">
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-dot badge-gold"></div> 25 Points = Gold Badge 🥇
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot badge-silver"></div> 24 Points = Silver Badge 🥈
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot badge-bronze"></div> 23 Points = Bronze Badge 🥉
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-lulu">
+            <img src="lulu-pig-3.jpg" alt="Lulu Pig">
+            <span class="heart">💕</span>
+            <img src="lulu-pig-4.jpg" alt="Lulu Pig">
+        </div>
+        <div class="footer-text">LULU PIG ELITE SCORE REPORT</div>
+        <div class="footer-note">Strictly Generated from Provided Data · No Names or Scores Invented · Elite First, Normal After</div>
+        <div class="footer-note">© 2026 LULU PIG ACADEMIC · ALL RIGHTS RESERVED</div>
+    </footer>
+
+    <script>
+        // ============================================================
+        // DATA SOURCE: 分数.txt — strictly use provided data only
+        // DO NOT invent names or scores. No missing or added entries.
+        // ============================================================
+
+        // --- DISCIPLINE CLASSIFICATION RULES ---
+        // 🧠 理科 (Science/Tech): AI, AIES, AI ETHICS, CS, DS, ECE, EHS, ENGINE, ENV.ENG,
+        //    ICS, IDT, IELM, ILE, IT, MEDI, MPH, NS, ROBO, SEEM, SS, STATIS, TESL, CM, SUP
+        // 💰 商科 (Business): ACCT, AMC, BA, BM, ECIC, ECON, FIN, FIMM, GM, MACC,
+        //    MGM, MKT, MSGO, MIM, NPM, GC, MER, SGO, MCGRM
+        // 📖 文科 (Arts/Humanities): ART.THER, CL, EDU, EIHP, ENG, ENG.S, ENG.STUD,
+        //    JOURN, LAW, LING, LLM, PHISO, PPE, SOC, TCLL, DFS, DUM, MAA, MAAL,
+        //    MAES, MGPE, BIDC, AFA, AIS, ABCT, AIH, CLL
+        // 🔢 数理 (Maths/Stats/Data/Pure Sci): AL, EAS, MATHS, MCL, MS, DS&E, FINTECH, STAT
+
+        const disciplineRules = {
+            'science': ['AI', 'AIES', 'AI ETHICS', 'CS', 'DS', 'ECE', 'EHS', 'ENGINE', 'ENV.ENG',
+                        'ICS', 'IDT', 'IELM', 'ILE', 'IT', 'MEDI', 'MPH', 'NS', 'ROBO', 'SEEM',
+                        'SS', 'STATIS', 'TESL', 'CM', 'SUP', 'SGO', 'DS&E'],
+            'business': ['ACCT', 'AMC', 'BA', 'BM', 'ECIC', 'ECON', 'FIN', 'FIMM', 'GM', 'MACC',
+                         'MGM', 'MKT', 'MSGO', 'MIM', 'NPM', 'GC', 'MER', 'MCGRM', 'SSM'],
+            'arts': ['ART.THER', 'CL', 'CLL', 'EDU', 'EIHP', 'ENG', 'ENG.S', 'ENG.STUD',
+                     'JOURN', 'LAW', 'LING', 'LLM', 'PHISO', 'PPE', 'SOC', 'TCLL', 'DFS',
+                     'DUM', 'MAA', 'MAAL', 'MAES', 'MGPE', 'BIDC', 'AFA', 'AIS', 'ABCT', 'AIH'],
+            'maths': ['AL', 'EAS', 'MATHS', 'MCL', 'MS', 'FINTECH', 'STAT']
+        };
+
+        function classifyDiscipline(major) {
+            const m = major.toUpperCase().replace(/\./g, '').replace(/\s+/g, ' ').trim();
+            // Check exact and prefix matches
+            for (const [cat, codes] of Object.entries(disciplineRules)) {
+                for (const code of codes) {
+                    const normalized = code.toUpperCase().replace(/\./g, '').replace(/\s+/g, ' ').trim();
+                    if (m === normalized) return cat;
+                    // Handle cases like "ENG.STUD" vs "ENG"
+                    if (m.startsWith(normalized) && normalized.length >= 3) {
+                        // Ensure it's a real prefix match, not just partial
+                        if (m.length === normalized.length || m[normalized.length] === ' ' || m[normalized.length] === '.') {
+                            return cat;
+                        }
+                    }
+                }
+            }
+            // Fallback: guess by keywords
+            if (/^(AI|CS|DS|IT|IE|ENGINE|ROBO|MEDI|SEEM|SS$|STATIS|TESL|CM$|SUP|NS$|ECE|EHS|ICS|IDT|ENV|ILE|MPH|SGO)/i.test(m)) return 'science';
+            if (/^(ACCT|BA|BM|ECON|FIN|MKT|GM|MACC|MGM|MSGO|MIM|NPM|GC$|MER|AMC|ECIC|FIMM|MCGRM|SSM)/i.test(m)) return 'business';
+            if (/^(EDU|LAW|LLM|ENG|JOURN|LING|PHILO|PPE|SOC|ART|TCLL|DFS|DUM|MAA|MAAL|MAES|MGPE|BIDC|AFA|AIS|ABCT|AIH|CL$|CLL|EIHP)/i.test(m)) return 'arts';
+            if (/^(MATHS|MATH|STAT|AL$|EAS|MCL|MS$|FINTECH)/i.test(m)) return 'maths';
+            return 'science'; // default
+        }
+
+        // ============================================================
+        // RAW DATA — from 分数.txt, exactly as provided
+        // Format: [score, major, name, school, isElite]
+        // ============================================================
+
+        // --- NORMAL CLASS (普通班) --- lines 3-84 of 分数.txt
+        const normalData = [
+            // HKU
+            [14, 'ACCT', 'Aurora', 'HKU'],
+            [15, 'ACCT', 'Triona', 'HKU'],
+            [21, 'AIES', 'Renata', 'HKU'],
+            [12, 'AI ETHICS', 'Amber', 'HKU'],
+            [22, 'AL', 'Susan', 'HKU'],
+            [22, 'BA', 'Moon', 'HKU'],
+            [23, 'BA', 'Sun', 'HKU'],
+            [22, 'CS', 'Estelle', 'HKU'],
+            [15, 'DFS', 'Yuri', 'HKU'],
+            [16, 'DUM', 'Mira', 'HKU'],
+            [21, 'DUM', 'Yong', 'HKU'],
+            [25, 'EAS', 'Cici', 'HKU'],
+            [19, 'ENG', 'Kyle', 'HKU'],
+            [20, 'ENG.S', 'Lurleen', 'HKU'],
+            [16, 'ENGINE', 'Crystal', 'HKU'],
+            [20, 'FIN', 'Daisy', 'HKU'],
+            [18, 'GM', 'Rachel', 'HKU'],
+            [21, 'IELM', 'Garret', 'HKU'],
+            [15, 'MAA', 'Sally', 'HKU'],
+            [14, 'MACC', 'Aurora', 'HKU'],
+            [16, 'MAES', 'Jennifer', 'HKU'],
+            [22, 'MCGRM', 'Lancey', 'HKU'],
+            [19, 'MKT', 'Milla', 'HKU'],
+            [25, 'MSGO', 'Edward', 'HKU'],
+            [20, 'MS', 'Stella', 'HKU'],
+            [20, 'NPM', 'Stella', 'HKU'],
+            [24, 'PPE', 'Sia', 'HKU'],
+            [13, 'PPE', 'Yara', 'HKU'],
+            [16, 'TCLL', 'Cinnie', 'HKU'],
+            [25, 'STATIS', 'Yutong', 'HKU'],
+            // CUHK
+            [18, 'AI', 'Jane', 'CUHK'],
+            [20, 'CL', 'Coco', 'CUHK'],
+            [18, 'ICS', 'Lorena', 'CUHK'],
+            [21, 'EDU', 'Nancy', 'CUHK'],
+            [12, 'EIHP', 'Jasmine', 'CUHK'],
+            [15, 'ENG.STUD', 'Asa', 'CUHK'],
+            [15, 'ENV.ENG', 'Chris', 'CUHK'],
+            [11, 'FIN', 'Rachel', 'CUHK'],
+            [19, 'GC', 'June', 'CUHK'],
+            [18, 'JOURN', 'Lincy', 'CUHK'],
+            [20, 'LAW', 'Sybil', 'CUHK'],
+            [15, 'LAW', 'Violet', 'CUHK'],
+            [12, 'MGPE', 'Refina', 'CUHK'],
+            [17, 'MKT', 'Hahnah', 'CUHK'],
+            [15, 'STAT', 'Annie', 'CUHK'],
+            [20, 'SUP', 'Raizel', 'CUHK'],
+            [19, 'SUP', 'Tina', 'CUHK'],
+            // UST
+            [18, 'ACCT', 'Chloe', 'UST'],
+            [25, 'ACCT', 'Cici', 'UST'],
+            [21, 'ACCT', 'Raynna', 'UST'],
+            [13, 'AMC', 'Amy', 'UST'],
+            [20, 'ECON', 'Denise', 'UST'],
+            [23, 'ILE', 'Anastasia', 'UST'],
+            [19, 'IT', 'Jenny', 'UST'],
+            [21, 'MATHS', 'Eureka', 'UST'],
+            [19, 'SGO', 'Carrie', 'UST'],
+            // CITYU
+            [18, 'ACCT', 'Cassie', 'CITYU'],
+            [11, 'AIS', 'River', 'CITYU'],
+            [16, 'FIN', 'Judy', 'CITYU'],
+            [18, 'LAW', 'Nancy', 'CITYU'],
+            [20, 'CM', 'Sharon', 'CITYU'],
+            [13, 'MKT', 'Lareina', 'CITYU'],
+            [15, 'NS', 'Kristen', 'CITYU'],
+            // POLYU
+            [11, 'ABCT', 'Saven', 'POLYU'],
+            [15, 'AFA', 'Kristen', 'POLYU'],
+            [13, 'AFA', 'Nena', 'POLYU'],
+            [20, 'BM', 'Shelley', 'POLYU'],
+            [15, 'BIDC', 'Leslie', 'POLYU'],
+            [18, 'MATHS', 'Ashton', 'POLYU'],
+        ];
+
+        // --- ELITE CLASS (精英班) --- lines 87-144 of 分数.txt
+        const eliteData = [
+            // HKU
+            [19, 'ART.THER', 'Shawn', 'HKU'],
+            [25, 'BA', '王毅', 'HKU'],
+            [25, 'ECIC', 'Janet', 'HKU'],
+            [24, 'ECIC', 'Linda', 'HKU'],
+            [21, 'ECE', 'Joyce', 'HKU'],
+            [25, 'EDU', 'Suki', 'HKU'],
+            [17, 'ENG', 'Jasmine', 'HKU'],
+            [16, 'FIMM', 'Christine', 'HKU'],
+            [18, 'FIN', 'Lucian', 'HKU'],
+            [25, 'IDT', 'Alan', 'HKU'],
+            [17, 'IDT', 'Andrew', 'HKU'],
+            [18, 'IDT', 'Lisa', 'HKU'],
+            [24, 'LLM', 'Mark', 'HKU'],
+            [18, 'MGM', 'Amy', 'HKU'],
+            [24, 'MKT', 'Eric', 'HKU'],
+            [16, 'MPH', 'Rinn', 'HKU'],
+            [21, 'SS', 'Felix', 'HKU'],
+            // CUHK
+            [16, 'EDU', 'Amber', 'CUHK'],
+            [24, 'LING', 'Sophia', 'CUHK'],
+            [24, 'LLM', 'Promise', 'CUHK'],
+            [22, 'MEDI', 'Kira', 'CUHK'],
+            [24, 'PHISO', 'Tammy', 'CUHK'],
+            [23, 'ROBO', 'Yifi', 'CUHK'],
+            [19, 'MIM', 'Elanie', 'CUHK'],
+            [25, 'SEEM', 'Wiliow', 'CUHK'],
+            [24, 'SOC', 'Flora', 'CUHK'],
+            // CITYU
+            [16, 'DS', 'Flora', 'CITYU'],
+            [24, 'CM', 'Evanna', 'CITYU'],
+            [21, 'MER', 'Xuan', 'CITYU'],
+            [19, 'MKT', 'Lesly', 'CITYU'],
+            // UST
+            [25, 'EHS', 'Helen', 'UST'],
+            [25, 'TESL', 'Aderyn', 'UST'],
+            // POLYU
+            [24, 'AFA', 'Cecilia', 'POLYU'],
+            [24, 'AFA', 'Santi', 'POLYU'],
+            [19, 'AIH', 'Lisa', 'POLYU'],
+            // 海外學校
+            [23, 'FIN', 'Sheldon', 'SCUT'],
+            [25, 'LAW', 'Lisa', 'QH'],
+            [20, 'FIN', 'Tina', 'PKU'],
+            [16, 'LAW', 'Sally', 'RUC'],
+        ];
+
+        // ============================================================
+        // BUILD STRUCTURED DATA
+        // ============================================================
+
+        const disciplineMeta = {
+            'science': { icon: '🧠', name: 'Science & Technology', cn: '理科' },
+            'business': { icon: '💰', name: 'Business & Economics', cn: '商科' },
+            'arts': { icon: '📖', name: 'Arts & Humanities', cn: '文科' },
+            'maths': { icon: '🔢', name: 'Mathematics & Data Science', cn: '数理' },
+        };
+
+        const disciplineOrder = ['science', 'business', 'arts', 'maths'];
+
+        function buildSectionData(rawData, isElite) {
+            const grouped = {};
+            rawData.forEach(([score, major, name, school]) => {
+                const disc = classifyDiscipline(major);
+                if (!grouped[disc]) grouped[disc] = [];
+                grouped[disc].push({ score, major, name, school });
+            });
+            // Sort each discipline by score desc, then name
+            for (const disc of Object.keys(grouped)) {
+                grouped[disc].sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
+            }
+            return grouped;
+        }
+
+        const eliteGrouped = buildSectionData(eliteData, true);
+        const normalGrouped = buildSectionData(normalData, false);
+
+        // ============================================================
+        // BADGE HELPER
+        // ============================================================
+        function getBadgeHtml(score) {
+            if (score === 25) return '<span class="badge badge-gold" title="25 Points - Gold">🥇</span>';
+            if (score === 24) return '<span class="badge badge-silver" title="24 Points - Silver">🥈</span>';
+            if (score === 23) return '<span class="badge badge-bronze" title="23 Points - Bronze">🥉</span>';
+            return '';
+        }
+
+        function getScoreClass(score) {
+            if (score === 25) return 'score-gold';
+            if (score === 24) return 'score-silver';
+            if (score === 23) return 'score-bronze';
+            return '';
+        }
+
+        // ============================================================
+        // COUNT BADGE STATS
+        // ============================================================
+        function countBadges(grouped) {
+            let gold = 0, silver = 0, bronze = 0;
+            Object.values(grouped).forEach(students => {
+                students.forEach(s => {
+                    if (s.score === 25) gold++;
+                    if (s.score === 24) silver++;
+                    if (s.score === 23) bronze++;
+                });
+            });
+            return { gold, silver, bronze };
+        }
+
+        const eliteBadges = countBadges(eliteGrouped);
+        const normalBadges = countBadges(normalGrouped);
+        const totalGold = eliteBadges.gold + normalBadges.gold;
+        const totalSilver = eliteBadges.silver + normalBadges.silver;
+        const totalBronze = eliteBadges.bronze + normalBadges.bronze;
+        const totalStudents = eliteData.length + normalData.length;
+
+        // Update stats
+        document.getElementById('totalCount').textContent = totalStudents;
+        document.getElementById('goldCount').textContent = totalGold;
+        document.getElementById('silverCount').textContent = totalSilver;
+        document.getElementById('bronzeCount').textContent = totalBronze;
+
+        // ============================================================
+        // RENDER
+        // ============================================================
+        function renderTable(students, disc) {
+            const meta = disciplineMeta[disc];
+            let html = '';
+            html += `<div class="discipline-group">`;
+            html += `<div class="discipline-header">`;
+            html += `<span class="discipline-icon">${meta.icon}</span>`;
+            html += `<span class="discipline-name">${meta.name}<span class="cn">${meta.cn}</span></span>`;
+            html += `<span class="discipline-count">${students.length} students</span>`;
+            html += `</div>`;
+            html += `<table class="data-table">`;
+            html += `<thead><tr>`;
+            html += `<th>#</th><th>School</th><th>Major</th><th>Name</th><th>Score</th><th>Badge</th>`;
+            html += `</tr></thead><tbody>`;
+            students.forEach((s, i) => {
+                const badge = getBadgeHtml(s.score);
+                const scoreCls = getScoreClass(s.score);
+                html += `<tr>`;
+                html += `<td class="col-rank">${i + 1}</td>`;
+                html += `<td class="col-school">${s.school}</td>`;
+                html += `<td class="col-major">${s.major}</td>`;
+                html += `<td class="col-name">${s.name}</td>`;
+                html += `<td class="col-score ${scoreCls}">${s.score}</td>`;
+                html += `<td class="col-badge">${badge}</td>`;
+                html += `</tr>`;
+            });
+            html += `</tbody></table></div>`;
+            return html;
+        }
+
+        function renderSection(grouped, title, badge, subtitle, cssClass) {
+            const totalInSection = Object.values(grouped).reduce((s, a) => s + a.length, 0);
+            let html = `<section class="section ${cssClass}">`;
+            html += `<div class="section-header">`;
+            html += `<div class="section-title-group">`;
+            html += `<span class="section-badge">${badge}</span>`;
+            html += `<h2 class="section-title">${title}</h2>`;
+            html += `<span class="section-subtitle">${subtitle}</span>`;
+            html += `</div>`;
+            html += `<div class="section-count">${totalInSection} Students</div>`;
+            html += `</div>`;
+
+            // Render disciplines in fixed order
+            for (const disc of disciplineOrder) {
+                if (grouped[disc] && grouped[disc].length > 0) {
+                    html += renderTable(grouped[disc], disc);
+                }
+            }
+
+            html += `</section>`;
+            return html;
+        }
+
+        const mainContent = document.getElementById('mainContent');
+
+        // ELITE SECTION FIRST
+        mainContent.innerHTML += renderSection(
+            eliteGrouped,
+            '<img src="lulu-pig-1.jpg" alt="" style="width:32px;height:32px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:4px;">Elite Class · 精英班',
+            'Elite Pool · Core Leadership',
+            'The Vanguard · Top Academic Performers',
+            'elite-section'
+        );
+
+        // NORMAL SECTION AFTER
+        mainContent.innerHTML += renderSection(
+            normalGrouped,
+            '<img src="lulu-pig-4.jpg" alt="" style="width:32px;height:32px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:4px;">Normal Class · 普通班',
+            'Rising Force · Standard Pool',
+            'Future Stars · Building Foundations',
+            'normal-section'
+        );
+    </script>
+
+</body>
+</html>
